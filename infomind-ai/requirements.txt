@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+python-multipart
+scikit-learn
+pypdf
+python-docx
+pillow
+pytesseract
+pytest
+httpx
