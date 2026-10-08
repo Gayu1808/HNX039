@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>InfoMind AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F4F7;--panel:#fff;--ink:#17203A;--mute:#5E6783;--line:#DDE2EB;--side:#17203A;--sideink:#C9D0E4;--acc:#3B4BDB;--crit:#C8372D;--high:#D9801A;--med:#B8A010;--low:#2E8B57;--tint:#EEF0FB;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1426;--panel:#171E36;--ink:#E8EBF5;--mute:#98A1BF;--line:#2A3355;--side:#0A0E1D;--tint:#1E2750;--acc:#7C8BFF;--crit:#FF6B5E;--high:#F2A04A;--med:#D8C44A;--low:#4FC98A}}
+:root[data-theme="dark"]{--bg:#0F1426;--panel:#171E36;--ink:#E8EBF5;--mute:#98A1BF;--line:#2A3355;--side:#0A0E1D;--tint:#1E2750;--acc:#7C8BFF;--crit:#FF6B5E;--high:#F2A04A;--med:#D8C44A;--low:#4FC98A}
+*{box-sizing:border-box}html,body{margin:0}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Figtree,system-ui,sans-serif;display:flex;min-height:100vh}
+h1,h2,h3{font-family:'Bricolage Grotesque',Figtree,sans-serif;margin:0;letter-spacing:-.01em}
+button{font:inherit;cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+aside{width:224px;background:var(--side);color:var(--sideink);padding:20px 12px;position:sticky;top:0;height:100vh;flex:none;display:flex;flex-direction:column;gap:2px}
+.logo{font:800 20px 'Bricolage Grotesque',sans-serif;color:#fff;padding:4px 10px 18px}.logo span{color:#9AA6FF}
+aside button.nav{background:none;border:0;color:inherit;text-align:left;padding:9px 10px;border-radius:8px;display:flex;gap:10px;align-items:center}
+aside button.nav:hover{background:rgba(255,255,255,.07)}aside button.nav.on{background:#3B4BDB;color:#fff}
+.nav b{min-width:20px;background:var(--crit);color:#fff;border-radius:10px;font-size:11px;text-align:center;margin-left:auto;padding:1px 6px}
+main{flex:1;min-width:0;padding:28px 32px 48px;max-width:1100px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:12px}
+.top h1{font-size:28px}.sub{color:var(--mute);margin:2px 0 0}
+.pill{border:1px solid var(--line);background:var(--panel);border-radius:20px;padding:6px 12px;color:var(--mute);font-size:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.stat{padding:14px 16px}.stat b{font:800 30px 'Bricolage Grotesque',sans-serif;display:block}.stat span{color:var(--mute);font-size:13px}
+.stat.c b{color:var(--crit)}.stat.w b{color:var(--high)}.stat.ok b{color:var(--low)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.flow i{font-style:normal;background:var(--tint);color:var(--acc);border-radius:6px;padding:3px 10px;font-weight:600;font-size:13px}
+.flow i:last-child{background:var(--acc);color:#fff}.flow em{color:var(--mute);font-style:normal}
+.hero{background:var(--side);color:#fff;border:0;margin-bottom:14px}.hero h2{font-size:24px;max-width:30ch}.hero .flow i{background:rgba(255,255,255,.12);color:#DDE2FF}.hero .flow i:last-child{background:#6C7BFF;color:#fff}
+.issue{display:grid;grid-template-columns:5px 1fr auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.issue:first-of-type{border-top:0}.bar{align-self:stretch;border-radius:3px}
+.s-critical{background:var(--crit)}.s-high{background:var(--high)}.s-medium{background:var(--med)}.s-low{background:var(--low)}
+.issue h3{font-size:16px}.meta{color:var(--mute);font-size:13px}
+.score{font:800 22px 'Bricolage Grotesque',sans-serif;text-align:right}.score small{display:block;font:500 11px Figtree;color:var(--mute)}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:7px;padding:6px 12px;font-size:13px;font-weight:500}
+.btn:hover{border-color:var(--acc);color:var(--acc)}.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}.btn.p:hover{color:#fff;opacity:.9}
+.btn.d{color:var(--crit)}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tag{font-size:12px;font-weight:600;border-radius:5px;padding:2px 8px;color:#fff}
+.ask{display:flex;gap:8px;margin:8px 0 14px}.ask input{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;min-width:0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.chips button{background:var(--tint);color:var(--acc);border:0;border-radius:16px;padding:6px 12px;font-size:13px;font-weight:500}
+.ans{border-left:4px solid var(--acc)}.ans p{font:600 18px 'Bricolage Grotesque',sans-serif;margin:0 0 10px}
+.src{display:flex;justify-content:space-between;padding:8px 10px;background:var(--bg);border-radius:6px;margin-top:6px;font-size:14px}.src span{color:var(--mute)}
+.doc h3{font-size:15px;word-break:break-all}.doc .meta{margin:4px 0 12px}
+.up{border:2px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--mute);margin-bottom:14px;cursor:pointer;display:block}
+.up:hover{border-color:var(--acc);color:var(--acc)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}th{color:var(--mute);font-weight:500;font-size:13px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px}.cmp .card h3{font-size:15px;margin-bottom:8px}
+.big{font:800 30px 'Bricolage Grotesque',sans-serif}.conf{background:color-mix(in srgb,var(--crit) 10%,var(--panel));border-color:var(--crit)}
+.hbar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:4px 0 12px}.hbar div{height:100%;background:var(--acc)}
+.hl{display:flex;justify-content:space-between;font-size:14px}
+svg text{font:500 12px Figtree,sans-serif;fill:var(--ink)}.node{cursor:pointer}.node:hover circle{stroke:var(--acc);stroke-width:3}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tabs button{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:16px;padding:5px 14px;font-size:13px}.tabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}.toast.on{opacity:1}
+.chg li{margin:4px 0}.chg ul{padding-left:18px;margin:8px 0 12px}
+@media(max-width:820px){body{display:block}aside{position:static;width:100%;height:auto;flex-direction:row;overflow-x:auto;padding:8px}.logo{padding:6px 10px}aside button.nav{white-space:nowrap}main{padding:18px 14px 40px}.g4,.g3{grid-template-columns:1fr 1fr}.g2,.cmp{grid-template-columns:1fr}.issue{grid-template-columns:5px 1fr}.issue .score{display:none}.tbl{overflow-x:auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<aside id="side"></aside>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const NAV=[['dash','Dashboard'],['docs','Documents'],['ask','Ask AI'],['cmp','Compare'],['ins','Insights'],['att','Attention Center'],['act','Action Center'],['ana','Analytics']];
+const ISSUES=[
+{id:1,sev:'critical',t:'Payment deadline is tomorrow',p:95,imp:'High',urg:'Very high',src:'Fee_Schedule.pdf, p.2'},
+{id:2,sev:'critical',t:'Salary conflict between two reports',p:92,imp:'High',urg:'High',src:'Salary_Report.pdf vs HR_Record.pdf'},
+{id:3,sev:'critical',t:'Contract expiry date changed',p:88,imp:'High',urg:'High',src:'Contract_v2.pdf, p.1'},
+{id:4,sev:'high',t:'Missing verification document in Application 12',p:78,imp:'High',urg:'Medium',src:'Application_12.pdf, p.3'},
+{id:5,sev:'medium',t:'Application 18 has an unsigned declaration',p:55,imp:'Medium',urg:'Medium',src:'Application_18.pdf, p.2'},
+{id:6,sev:'low',t:'Minor spelling difference in a name',p:25,imp:'Low',urg:'Low',src:'Application_21.pdf, p.4'}];
+const ACTIONS=[
+{sev:'critical',f:'Deadline tomorrow',a:'Verify payment',s:'Pending'},
+{sev:'high',f:'Document missing',a:'Request document',s:'Pending'},
+{sev:'medium',f:'Data conflict',a:'Verify record',s:'In review'},
+{sev:'low',f:'Minor difference',a:'Review later',s:'Completed'}];
+const DOCS=[['Salary_Report.pdf',12,3],['HR_Record.pdf',8,2],['Application_12.pdf',6,2],['Application_18.pdf',5,1],['Application_21.pdf',7,1],['Contract_v2.pdf',14,4]];
+const QA={
+'Which applications are incomplete?':['3 applications have missing documents.',[['Application_12.pdf','Page 3'],['Application_18.pdf','Page 2'],['Application_21.pdf','Page 4']]],
+'What deadlines are approaching?':['2 deadlines fall within the next 7 days.',[['Fee_Schedule.pdf','Page 2'],['Contract_v2.pdf','Page 1']]],
+'Are there conflicting details?':['Yes. Salary differs between two reports: ₹30,000 and ₹35,000.',[['Salary_Report.pdf','Page 4'],['HR_Record.pdf','Page 2']]],
+'What changed between these reports?':['4 important changes since the last review, including a new contract expiry date.',[['Contract_v2.pdf','Page 1'],['Salary_Report.pdf','Page 4']]]};
+const SEVC={critical:'Critical',high:'High',medium:'Medium',low:'Low'};
+let page='dash',filter='All',ask=null,node=null,verdict=null;
+const tag=s=>`<span class="tag s-${s}">${SEVC[s]}</span>`;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._);t._=setTimeout(()=>t.classList.remove('on'),2000)}
+function go(p){page=p;render();scrollTo(0,0)}
+function head(t,s,extra=''){return `<div class="top"><div><h1>${t}</h1><p class="sub">${s}</p></div>${extra}</div>`}
+function issueRow(i){return `<div class="issue"><div class="bar s-${i.sev}"></div><div><h3>${i.t}</h3><div class="meta">${tag(i.sev)} Impact ${i.imp} · Urgency ${i.urg} · ${i.src}</div><div class="row" style="margin-top:8px"><button class="btn" onclick="go('cmp')">Review</button><button class="btn p" onclick="toast('Action created');">Create action</button></div></div><div class="score" style="color:var(--${i.sev==='critical'?'crit':i.sev})">${i.p}<small>of 100</small></div></div>`}
+const V={
+dash(){const top=ISSUES.slice(0,4);return head('Good morning','Understand. Connect. Act.','<span class="pill">Last review: 2 days ago</span>')+
+`<div class="card hero"><h2>Don't just find information. Know what matters and what to do next.</h2><div class="flow"><i>Find</i><em>›</em><i>Understand</i><em>›</em><i>Connect</i><em>›</em><i>Analyze</i><em>›</em><i>Prioritize</i><em>›</em><i>Act</i></div></div>
+<div class="grid g4" style="margin-bottom:14px"><div class="card stat"><b>124</b><span>Documents</span></div><div class="card stat w"><b>8</b><span>Conflicts</span></div><div class="card stat c"><b>3</b><span>Critical</span></div><div class="card stat ok"><b>17</b><span>Actions completed</span></div></div>
+<div class="grid g2" style="grid-template-columns:2fr 1fr"><div class="card"><div class="top" style="margin:0 0 6px"><h2 style="font-size:20px">What needs your attention</h2><button class="btn" onclick="go('att')">See all</button></div>${top.map(issueRow).join('')}</div>
+<div class="grid" style="align-content:start"><div class="card"><h3>Since your last review</h3><ul style="padding-left:18px;margin:10px 0">
+<li>12 new documents</li><li>4 important changes</li><li>2 new critical findings</li><li>3 new conflicts</li><li>1 deadline changed</li></ul><button class="btn p" onclick="go('ins')">Review changes</button></div>
+<div class="card"><h3>Information health</h3><div class="big">78<small style="font:500 14px Figtree;color:var(--mute)"> / 100</small></div><p class="meta" style="margin:4px 0 0">2 conflicting records are lowering consistency.</p></div></div></div>`},
+docs(){return head('My documents','Upload files and open them to ask, compare or review.')+
+`<label class="up"><input type="file" multiple hidden onchange="up(this)">+ Upload documents<br><span class="meta">Select one or more files</span></label><div class="grid g3" id="dl">${DOCS.map(docCard).join('')}</div>`},
+ask_(){const a=ask&&QA[ask];return head('Ask your documents','Every answer shows the pages it came from.')+
+`<div class="ask"><input id="q" placeholder="Ask anything about your documents…" onkeydown="if(event.key==='Enter')doAsk()"><button class="btn p" onclick="doAsk()">Ask</button></div>
+<div class="chips">${Object.keys(QA).map(q=>`<button onclick="ask='${q}';render()">${q}</button>`).join('')}</div>
+${a?`<div class="card ans"><div class="meta">${ask}</div><p>${a[0]}</p><b style="font-size:13px">Sources</b>${a[1].map(s=>`<div class="src">${s[0]}<span>${s[1]}</span></div>`).join('')}</div>`:`<div class="card meta">Choose a suggested question or type your own.</div>`}`},
+cmp(){const row=(l,a,b,c)=>`<tr><td>${l}</td><td${c?' style="color:var(--crit);font-weight:600"':''}>${a}</td><td${c?' style="color:var(--crit);font-weight:600"':''}>${b}</td></tr>`;
+return head('Compare documents','Select two documents to see what disagrees.')+
+`<div class="cmp"><div class="card"><h3>Document A: Salary_Report.pdf</h3><div class="big">₹30,000</div><div class="meta">Salary, page 4</div></div><div class="card"><h3>Document B: HR_Record.pdf</h3><div class="big">₹35,000</div><div class="meta">Salary, page 2</div></div></div>
+<div class="card conf" style="margin-top:14px"><div class="row"><span class="tag s-critical">Conflict detected</span><b>Salary</b></div>
+<div class="tbl"><table><tr><th>Field</th><th>Salary_Report.pdf</th><th>HR_Record.pdf</th></tr>${row('Salary','₹30,000','₹35,000',1)}${row('Name','A. Kumar','A. Kumar')}${row('Join date','12 Mar 2022','12 Mar 2022')}</table></div>
+<p><b>Impact:</b> May affect payroll calculation.</p><p><b>Priority:</b> <span style="color:var(--crit);font-weight:700">92 / 100</span></p><p><b>Recommended action:</b> Verify latest payroll record.</p>
+${verdict?`<div class="row"><span class="tag s-low">${verdict}</span><button class="btn" onclick="verdict=null;render()">Undo</button></div>`:`<div class="row"><button class="btn p" onclick="vd('Approved')">Approve</button><button class="btn" onclick="vd('Modified')">Modify</button><button class="btn d" onclick="vd('Rejected')">Reject</button></div>`}</div>`},
+ins(){const N={Employee:['Employee','HR_Record.pdf, p.1'],Resume:['Resume','Resume.pdf, p.1'],Salary:['Salary','Salary_Report.pdf, p.4'],Performance:['Performance','Review_2026.pdf, p.3'],Python:['Python','Resume.pdf, p.2'],'₹35K':['₹35K','HR_Record.pdf, p.2'],Excellent:['Excellent','Review_2026.pdf, p.3']};
+const n=(x,y,l,r=26,cl='var(--tint)')=>`<g class="node" tabindex="0" onclick="node='${l}';render()" onkeydown="if(event.key==='Enter'){node='${l}';render()}"><circle cx="${x}" cy="${y}" r="${r}" fill="${node===l?'var(--acc)':cl}" stroke="var(--acc)" stroke-width="1.5"/><text x="${x}" y="${y+4}" text-anchor="middle" ${node===l?'style="fill:#fff"':''}>${l}</text></g>`;
+const e=(a,b,c,d)=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="var(--line)" stroke-width="2"/>`;
+const meters=[['Completeness',80],['Consistency',72],['Evidence',90],['Information quality',82]];
+return head('Insights','How your information connects, and how healthy it is.')+
+`<div class="grid g2" style="grid-template-columns:1.6fr 1fr"><div class="card"><h3>Relationship graph</h3><p class="meta">Select an item to see its source document.</p>
+<svg viewBox="0 0 520 340" width="100%" role="img" aria-label="Relationship graph">${e(260,50,110,140)}${e(260,50,260,140)}${e(260,50,410,140)}${e(110,140,110,240)}${e(260,140,260,240)}${e(410,140,410,240)}${e(110,240,260,310)}${e(260,240,260,310)}${e(410,240,260,310)}
+${n(260,50,'Employee',34,'var(--acc)').replace('fill="var(--acc)"','fill="var(--acc)"').replace('<text','<text style="fill:#fff"')}${n(110,140,'Resume',32)}${n(260,140,'Salary',32)}${n(410,140,'Performance',40)}${n(110,240,'Python',30)}${n(260,240,'₹35K',30)}${n(410,240,'Excellent',34)}
+<rect x="190" y="298" width="140" height="26" rx="13" fill="var(--panel)" stroke="var(--line)"/><text x="260" y="315" text-anchor="middle">Reports</text></svg>
+<div class="src">${node&&N[node]?`${N[node][0]}<span>Source: ${N[node][1]}</span>`:'No item selected<span>Select a node</span>'}</div></div>
+<div class="card"><h3>Information health</h3><div class="big">78<small style="font:500 14px Figtree;color:var(--mute)"> / 100</small></div>${meters.map(m=>`<div class="hl"><span>${m[0]}</span><b>${m[1]}%</b></div><div class="hbar"><div style="width:${m[1]}%"></div></div>`).join('')}<p class="meta">2 conflicting records are lowering consistency.</p></div></div>
+<div class="card chg" style="margin-top:14px"><h3>What changed since your last review</h3><ul><li>12 new documents</li><li>4 important changes</li><li>2 new critical findings, 3 new conflicts</li><li>1 deadline changed</li></ul><button class="btn p" onclick="go('att')">Review changes</button></div>`},
+att(){const list=ISSUES.filter(i=>filter==='All'||SEVC[i.sev]===filter);return head('Attention Center','Ranked by impact and urgency.')+
+`<div class="tabs">${['All','Critical','High','Medium','Low'].map(f=>`<button class="${f===filter?'on':''}" onclick="filter='${f}';render()">${f}</button>`).join('')}</div><div class="card">${list.length?list.map(issueRow).join(''):'<p class="meta">Nothing in this level.</p>'}</div>`},
+act(){return head('Action Center','Recommended next steps for each finding.')+
+`<div class="card tbl"><table><tr><th>Priority</th><th>Finding</th><th>Recommended action</th><th>Status</th><th></th></tr>${ACTIONS.map((a,i)=>`<tr><td>${tag(a.sev)}</td><td>${a.f}</td><td>${a.a}</td><td>${a.s}</td><td><div class="row"><button class="btn p" onclick="ACTIONS[${i}].s='Completed';render();toast('Marked complete')">Complete</button><button class="btn" onclick="asg(${i})">Assign</button><button class="btn" onclick="note(${i})">Add note</button></div></td></tr>`).join('')}</table></div>`},
+ana(){const cats=[['Deadlines',9],['Conflicts',8],['Missing information',14],['Other findings',27-9]];const mx=18;
+return head('Analytics','A summary of what has been processed.')+
+`<div class="grid g4" style="margin-bottom:14px">${[['Documents processed',124],['Important findings',27],['Conflicts',8],['Missing information',14]].map(s=>`<div class="card stat"><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')}</div>
+<div class="grid g2"><div class="card"><h3>Findings by category</h3>${cats.map(c=>`<div class="hl" style="margin-top:10px"><span>${c[0]}</span><b>${c[1]}</b></div><div class="hbar"><div style="width:${c[1]/mx*100}%"></div></div>`).join('')}</div><div class="card stat ok"><b>19</b><span>Actions completed</span></div></div>`}};
+function docCard(d){return `<div class="card doc"><h3>${d[0]}</h3><div class="meta">Processed · ${d[1]} pages · ${d[2]} important findings</div><div class="row"><button class="btn" onclick="toast('Opening ${d[0]}')">View</button><button class="btn" onclick="go('ask')">Ask AI</button><button class="btn" onclick="go('cmp')">Compare</button></div></div>`}
+function up(el){[...el.files].forEach(f=>DOCS.unshift([f.name,'–','Analyzing']));render();toast(el.files.length+' file(s) added')}
+function doAsk(){const v=$('#q').value.trim();if(!v)return;const k=Object.keys(QA).find(q=>q.toLowerCase().includes(v.toLowerCase().slice(0,12)))||(/incomplete|missing/i.test(v)?Object.keys(QA)[0]:/deadline/i.test(v)?Object.keys(QA)[1]:/conflict/i.test(v)?Object.keys(QA)[2]:Object.keys(QA)[3]);ask=k;render()}
+function vd(v){verdict=v;render();toast(v+': logged for audit')}
+function asg(i){const n=prompt('Assign to:');if(n){toast('Assigned to '+n)}}
+function note(i){const n=prompt('Add a note:');if(n){toast('Note saved')}}
+function render(){
+$('#side').innerHTML=`<div class="logo">Info<span>Mind</span> AI</div>`+NAV.map(n=>`<button class="nav ${n[0]===page?'on':''}" onclick="go('${n[0]}')">${n[1]}${n[0]==='att'?'<b>3</b>':''}</button>`).join('');
+$('#main').innerHTML=(V[page==='ask'?'ask_':page])();
+if(page==='ask'&&ask){}}
+render();
+</script></body></html>
